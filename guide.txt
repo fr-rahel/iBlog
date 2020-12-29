@@ -1,0 +1,155 @@
+Creating A Project :
+
+ composer create-project laravel/laravel projectName “5.8.*” [ Change the version as per your wish]
+
+Git and Github :
+
+Goto project folder using command line
+Initialization : git init
+
+Add all files for commiting  : git add .
+Add single file for commiting : git add example.txt
+
+Commit on local repo : git commit -m “commit-message”
+
+Create a repository on github and copy the url link
+Link Up : git remote add origin URLofRepository [ origin or any other suitable name]
+Verify : git remote -v
+
+Push commits to remote : git push origin master
+Push commits to remote by force : git push origin master --force  [ Not recommended, use only for first commit ] 
+
+Fetching from repository : git fetch origin
+Merging fetched data with local files : git merge origin
+With branch : git merge origin/[current-branch-name]
+Both should be used while fetching
+Fetching and Merging at the same time : git pull origin
+
+Cloning a GitHub project :
+Clone Project : git clone PROJECT URL
+Install Composer : composer install
+Import npm packages : npm install
+Copy and edit .env file from .env.example file : cp .env.example .env
+Generate Project Key : php artisan key:generate
+*Storage Link in case it was used : php artisan storage:link
+*Copy files that were manually copied to /storage for use
+*Create Database and configure database section in .env file
+* Migration : php artisan migrate
+Run Project : php artisan serve
+
+Migration :
+
+Create new Model : php artisan make:model User
+Make Migrate : php artisan make:migration create_users_table
+Create new Model with migration file : php artisan make:model User -m
+Migrate : php artisan migrate
+
+Adding Column in existing model : 
+php artisan make:migration add_country_to_users
+
+Using Faker :
+Creating Seeder file : php artisan make:seeder PostsTableSeeder
+Goto the seeder file
+Add to the file : use Faker\Factory as Faker
+Edit run() function : [for example]
+public function run(){
+	$faker = Faker::create(‘App\Post’);
+	DB::table(‘posts’)->insert([
+		‘title’ => $faker->sentence,
+		‘body’ => implode($faker->paragraphs(5)),
+		‘created_at’ => \Carbon\Carbon::now(),
+		‘updated_at’ => \Carbon\Carbon::now(),
+	]);
+}
+-> this will create a single dummy data to posts table. For multiple data at once    use the DB::table()->insert() part inside a loop
+-> Additional Features :
+'status' => $faker->randomElement(['Airing','Not Aired','Finished'])
+'episodes' => $faker->randomNumber(3)              // 3 digit number
+Use seed command : php artisan db:seed --class=PostsTableSeeder
+
+
+
+Controller :
+
+Create New Controller : php artisan make:controller controllerName
+With CRUD Resource : php artisan make:controller controllerName --resource
+
+Blade Template :
+
+Extend       : @extends(‘location of parent’);
+
+Yield           : @yeild(‘yieldName’)
+
+Section       : @section(‘sectionName’)
+		         @endsection
+
+Foreach      : @foreach($users as $user)
+		      {{ $user->name }}
+                     @endforeach
+
+If-else          : @if(5 > 2)
+	          @elseif(7 > 2)
+                      @else
+                      @endif
+
+For                : @for($i = 0 ; $i < 10 ; $i++)
+	{{ $i }}
+		@endfor
+
+
+Route :
+
+Route::get (‘url’ , ’controllerName@function’);
+Route::resource(‘posts’,’PostsController’)
+Route::get(‘url; , function(){
+	/// function contents
+});
+
+Authentication :
+
+php artisan make:auth
+php artisan migrate
+auth()->guest() : returns true if user has not signed in
+auth()->user()->name() :  returns user’s name when signed in
+Auth::guest() : returns true if user has not signed in
+Auth::user()->name : returns user’s name when signed in
+
+Controllers :
+
+Redirecting : return redirect(‘/home’);
+With Data   : return redirect(‘/home’)->with(‘data’,$data);
+
+Return to a view : return view(‘pages.posts’);
+With Data : return view(‘pages.posts’)->with(‘posts’,$posts);
+With Array : 
+$data = array(
+	‘posts’ => $posts ,
+	‘users’ => $users
+);
+return view(‘pages.posts’)->with($data);
+
+Eloquent ORM and Tinker :
+
+To use a Model in a controller : use App\modelName
+
+To fetch data using id : $posts = Post::find($id)
+
+Fetching data using where : $posts = Post::where(‘columnName’,Value)->get()
+$posts = Post::where(‘category’,’Anime’)->get()
+$posts = Post::where(‘category’,’Anime’)->where(‘name’,’Your Name’)->get()
+
+Limit data : $posts = Post::where(‘category’,’Anime’)->take(12)->get()
+Pagination : $posts = Post::where(‘category’,’Anime’)->paginate(5);
+Add {{$posts->links()}} in blade file where you want the pagination
+
+Ascending : 
+$posts = Post::where(‘category’,’Anime’)->orderBy(‘name’,’asc’)->take(12)->get()
+
+Descending :
+$posts = Post::where(‘category’,’Anime’)->orderBy(‘name’,’desc’)->take(12)->get()
+
+Saving : $post->save()
+
+Deleting : $post->delete()
+
+Fetching all data : $posts = Post::all()
