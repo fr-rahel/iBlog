@@ -39,3 +39,5 @@ Run Project : php artisan serve
 2. Create Database and migrate (Configure .env file based database)
 3. Delete storage folder under public directory
 4. Run : php artisan storage:link
+5. Run : php artisan serve
+6. Goto : http://127.0.0.1:8000

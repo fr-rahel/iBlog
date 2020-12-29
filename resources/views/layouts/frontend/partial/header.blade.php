@@ -1,7 +1,7 @@
 <header>
 		<div class="container-fluid position-relative no-side-padding">
 
-			<a href="/" class="logo">Rahelweb</a>
+			<a href="/" class="logo">iBlog</a>
 
 			<div class="menu-nav-icon" data-nav-menu="#main-menu"><i class="ion-navicon"></i></div>
 
@@ -14,7 +14,7 @@
 					<li><a href="{{route('register')}}">Register</a></li>
 
 					@else
-						@if(Auth::user()->role->id == 1)
+						@if(Auth::user()->role_id == 1)
 							<li><a href="{{route('admin.dashboard')}}">Dashboard</a></li>
 								<li>
 										<a class="dropdown-item" href="{{ route('logout') }}"
@@ -29,7 +29,7 @@
 								</li>
 							
 						@endif
-						@if(Auth::user()->role->id == 2)
+						@if(Auth::user()->role_id == 2)
 							<li><a href="{{route('author.dashboard')}}">Dashboard</a></li>
 							<li>
                             <a class="dropdown-item" href="{{ route('logout') }}"

@@ -22,6 +22,7 @@
 	<section class="blog-area section">
 		<div class="container">
 			<div class="row">
+			
             @foreach ($posts as $post)
               <div class="col-lg-4 col-md-6">
 					<div class="card h-100">
